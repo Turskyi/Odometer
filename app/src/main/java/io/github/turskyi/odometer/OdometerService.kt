@@ -47,14 +47,20 @@ class OdometerService : Service() {
         }
         locManager = getSystemService(LOCATION_SERVICE) as LocationManager
         if (ContextCompat.checkSelfPermission(this, PERMISSION_STRING)
-                == PackageManager.PERMISSION_GRANTED) {
+            == PackageManager.PERMISSION_GRANTED
+        ) {
             val provider = locManager?.getBestProvider(Criteria(), true)
             if (provider != null) {
                 /* The requestLocationUpdates() method takes four parameters: a GPS provider,
                  the minimum time interval between location updates in milliseconds,
                  the minimum distance between location updates in
                  meters, and a LocationListener. */
-                locManager?.requestLocationUpdates(provider, 1000, 1f, listener as LocationListener)
+                locManager?.requestLocationUpdates(
+                    provider,
+                    1000,
+                    1f,
+                    listener as LocationListener,
+                )
             }
         }
     }
@@ -65,7 +71,8 @@ class OdometerService : Service() {
         super.onDestroy()
         if (locManager != null && listener != null) {
             if (ContextCompat.checkSelfPermission(this, PERMISSION_STRING)
-                    == PackageManager.PERMISSION_GRANTED) {
+                == PackageManager.PERMISSION_GRANTED
+            ) {
                 locManager?.removeUpdates(listener!!)
             }
             locManager = null

@@ -31,7 +31,7 @@ class MainActivity : Activity() {
 
     private val connection: ServiceConnection = object : ServiceConnection {
         override fun onServiceConnected(componentName: ComponentName, binder: IBinder) {
-            val odometerBinder = binder as OdometerBinder
+            val odometerBinder: OdometerBinder = binder as OdometerBinder
             odometer = odometerBinder.odometer
             bound = true
         }
@@ -119,7 +119,7 @@ class MainActivity : Activity() {
                 if (bound && odometer != null) {
                     distanceInMiles = odometer!!.distanceInMiles
                 }
-                val distanceStr = String.format(
+                val distanceStr: String = String.format(
                     Locale.getDefault(),
                     "%1$,.2f miles", distanceInMiles
                 )
@@ -141,8 +141,9 @@ class MainActivity : Activity() {
             val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
                 description = descriptionText
             }
-            /* Register the channel with the system */
-            val notificationManager: NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            // Register the channel with the system
+            val notificationManager: NotificationManager =
+                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
         }
     }
